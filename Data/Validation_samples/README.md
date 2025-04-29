@@ -6,36 +6,18 @@ This directory includes validaiton samples
 | ------------- |:-------------:|
 | 1      | Non-cropland |
 | 2      | Stable cropland      |
-| zebra stripes | are neat      |
-| zebra stripes | are neat      |
-| zebra stripes | are neat      |
-| zebra stripes | are neat      |
-| zebra stripes | are neat      |
-| zebra stripes | are neat      |
-| zebra stripes | are neat      |
-| zebra stripes | are neat      |
-| zebra stripes | are neat      |
-| zebra stripes | are neat      |
+| 3 | Fallow      |
+| 4 | 1990-1992 abandonment      |
+| 5 | 1993-1995 abandonment      |
+| 6 | 1996-1998 abandonment      |
+| 7 | 1999-2001 abandonment      |
+| 8 | 2002-2004 abandonment      |
+| 9 | 2005-2007 abandonment      |
+| 10 | 2008-2010 abandonment      |
+| 11 | 2011-2013 abandonment      |
+| 12 | 2014-2016 abandonment      |
+| 13 | 2017-2019 abandonment      |
 
-
-
-Abandonment | 1 | 2 | 3 | 4 | 5 | 6 | #7 | #8 | #9 | #10 | #11
---- | --- | --- | --- |--- |--- |--- |--- |--- |--- |--- |---
-Class | Non-cropland | Stable cropland | Fallow | 1990-1992 abandonment | 1993-1995 abandonment | 285 | 287 | 287 | 272 | 276 | 269
-
-1	Non-cropland
-2	Stable cropland
-3	Fallow
-4	1990-1992 abandonment
-5	1993-1995 abandonment
-6	1996-1998 abandonment
-7	1999-2001 abandonment
-8	2002-2004 abandonment
-9	2005-2007 abandonment
-10	2008-2010 abandonment
-11	2011-2013 abandonment
-12	2014-2016 abandonment
-13	2017-2019 abandonment
 
 **Class	codes for recultivation validation samples**
 1	Non-cropland
