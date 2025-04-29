@@ -12,7 +12,6 @@ var ID=161
 
 var validSample=ee.FeatureCollection('projects/amiable-poet-296019/assets/Recultivation_validation_EEurope_2024_Merge_v19_Part2_3_merge')
 
-
 var validSample_sorted=validSample.sort('ID')
 
 print(validSample_sorted.limit(10),'getPoint')
@@ -47,8 +46,6 @@ print(getPoint,'getPoint')
   var start6='2020-5-15';
   var end6='2020-7-15';
   
-
-  
 //Defined the months for plotting NDVI time series 4:April, 11:November
   var startmonth= ee.Number(5);
   var endmonth=  ee.Number(10);
@@ -63,8 +60,7 @@ print(getPoint,'getPoint')
 //1 indicates the second leasted clouded imagery
   var cloudness=ee.Number(0);
 
-
-////Cloud masking and caculate NDVI
+//Cloud masking and caculate NDVI
 //cloud mask for L8, check https://landsat.usgs.gov/landsat-surface-reflectance-quality-assessment
 var cloudMaskL8 = function (image) {
   var qa = image.select("QA_PIXEL");
@@ -681,7 +677,6 @@ var bsiChart = ui.Chart.image.series(collection_bsi, point, ee.Reducer.mean(), k
     map7.addLayer(image7, vis2);
     map7.addLayer(point, {color:'FF0000'});
     map7.add(ui.Label(id7, {position:'bottom-center'}));
-    
   
 };
 
