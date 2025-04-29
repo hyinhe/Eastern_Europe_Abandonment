@@ -2,9 +2,26 @@ This directory includes validaiton samples
 
 **Class	codes for abandonment validation samples**
 
-Attempt | 1 | 2 | 3 | 4 | 5 | 6 | #7 | #8 | #9 | #10 | #11
+| Abandonment        | Class           |
+| ------------- |:-------------:|
+| 1      | Non-cropland |
+| 2      | Stable cropland      |
+| zebra stripes | are neat      |
+| zebra stripes | are neat      |
+| zebra stripes | are neat      |
+| zebra stripes | are neat      |
+| zebra stripes | are neat      |
+| zebra stripes | are neat      |
+| zebra stripes | are neat      |
+| zebra stripes | are neat      |
+| zebra stripes | are neat      |
+| zebra stripes | are neat      |
+
+
+
+Abandonment | 1 | 2 | 3 | 4 | 5 | 6 | #7 | #8 | #9 | #10 | #11
 --- | --- | --- | --- |--- |--- |--- |--- |--- |--- |--- |---
-Seconds | 301 | 283 | 290 | 286 | 289 | 285 | 287 | 287 | 272 | 276 | 269
+Class | Non-cropland | Stable cropland | Fallow | 1990-1992 abandonment | 1993-1995 abandonment | 285 | 287 | 287 | 272 | 276 | 269
 
 1	Non-cropland
 2	Stable cropland
