@@ -1,5 +1,5 @@
 /*Author:He Yin
-  Date:20-April-2019
+  Date:20-April-2013
   Purpose: 1. Count the frequency of cropland
            2. Label cropland re-cutlivation from land cover map series and abandonment map
            Abandonment defination: a cropland pixel that is 3 years out of 5 active followed by 5 year non-active
