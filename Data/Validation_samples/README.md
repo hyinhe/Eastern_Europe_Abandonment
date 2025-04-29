@@ -2,7 +2,7 @@ This directory includes validaiton samples
 
 **Class	codes for abandonment validation samples**
 
-| Abandonment        | Class           |
+| Class        |            |
 | ------------- |:-------------:|
 | 1      | Non-cropland |
 | 2      | Stable cropland      |
@@ -20,7 +20,7 @@ This directory includes validaiton samples
 
 **Class	codes for recultivation validation samples**
 
-| Recultivation        | Class           |
+| Class        |            |
 | ------------- |:-------------:|
 | 1      | Non-cropland |
 | 2      | Stable cropland      |
