@@ -19,11 +19,10 @@
 var tools=require('users/hyinhe/LUCS2021:Tools')
 
 //Set the extent of the study area 
-//var extent=EEUROP;
 var locat=ee.FeatureCollection('projects/ee-hyinhe/assets/He/SILVIS/Eastern_Europe/East_Europe_boundary_NUTS2_v3')
 
 //Pick the target years. For example, to calculate metrics for each individual years from 1986 to 1990, set "ee.List.sequence(1986,1990)"
-var years=ee.List.sequence(1986,1990)
+var years=ee.List.sequence(1986,1988)
 
 //Pick the period (day of the year) that is used for generating annual metrics
 var doystart =1
@@ -54,7 +53,6 @@ var filterCollection = function(year,doystart, doyend, sensor, locat){
           .filter(ee.Filter.calendarRange(previousYear, previousYear, 'year'))
           .filter(ee.Filter.calendarRange(doystart, doyend, 'day_of_year'))
           .map(tools.additionalmask)
-
   return col_1.merge(col_2).merge(col_3);
 };
 
@@ -66,7 +64,7 @@ var getSRcollection = function(year, doystart, doyend, sensor, locat) {
   srCollection = srCollection.map(function(img) {
     var data = ee.Algorithms.If(
         sensor == 'LC08' | 'LC09',                                 // condition - if image is Landsat 8
-        tools.cloudMaskL8_C2(img),                           // true - then apply the L8 masking
+        tools.cloudMaskL8_C2(img),                           // true - then apply L8 masking
         tools.cloudMaskL457_C2(img)                          // false - else apply L4-7 making
       )
       return data;
