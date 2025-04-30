@@ -1,5 +1,5 @@
 /*Author:He Yin
-  Date:20-April-2013
+  Date:20-April-2023
   Purpose: 1. Count the frequency of cropland
            2. Label cropland re-cutlivation from land cover map series and abandonment map
            Abandonment defination: a cropland pixel that is 3 years out of 5 active followed by 5 year non-active
@@ -22,15 +22,8 @@ var despt1='EEurope_recultivation'
 var despt1_1='He/Eastern_Europe/EEurope_recultivation'
 
 //******************************************Load abandonment map***********************************************************
-var abandonment_map=ee.Image('projects/ee-hyinhe/assets/He/SILVIS/Eastern_Europe/Europe_aband_all_MMU11_filter_1990_2019_SovietCropland_newUrbanMask_extract')
-//var abandonment_map=ee.Image('projects/ee-hyinhe/assets/He/SILVIS/Eastern_Europe/Europe_aband_all_MMU11_filter_1990_2019_SovietCropland_1st_final_v2')
+var abandonment_map=ee.Image('projects/ee-hyinhe/assets/He/SILVIS/Eastern_Europe/EEurope_abandonment')
 
-
-// var abdyears = ee.List(["1990","1991","1992","1993","1994","1995","1996",
-//                         "1997","1998","1999","2000","2001","2002","2003",
-//                         "2004","2005","2006","2007","2008","2009","2010",
-//                         "2011","2012",'2013','2014','2015','2016']);
-                        
 var recultyears = ee.List(["1995","1996","1997","1998","1999","2000","2001","2002","2003",
                         "2004","2005","2006","2007","2008","2009","2010",
                         "2011","2012",'2013','2014','2015','2016','2017']);
@@ -220,7 +213,6 @@ var replace3 = replace2.where(replace2.eq(after1).and(before1.eq(0)).and(before2
 var replace4 = replace3.where(replace3.eq(after1).and(before1.eq(1)).and(before2.eq(1))
                            .and(before3.eq(1)).and(after2.eq(1))
                            .and(after3.eq(1)).and(after4.eq(1)),1);
-
   return replace4
 }
 
@@ -259,21 +251,6 @@ Map.addLayer(filtered_stack3,{bands:['1988','2002','2017'],min:0,max:1},'land co
 var filtered_stack_final=filtered_stack3.addBands(cropmap.select(['1986','1987','2019','2020']))
 Map.addLayer(filtered_stack_final,{bands:['1988','2002','2017'],min:0,max:1},'land cover maps filtered_final')
 
-// //******************************************Use cropland mask to replace 1986-1989 maps***********************************************************
-// var crop_mask=ee.Image('projects/SILVIS_UW/He/Eastern_Europe/Europe_cropland_mask_1986_1989').unmask()
-// var crop1986=crop_mask.rename('1986')
-// var crop1987=crop_mask.rename('1987')
-// var crop1988=crop_mask.rename('1988')
-// var crop1989=crop_mask.rename('1989')
-
-// var filtered_stack_final= crop1986
-//                           .addBands(crop1987)
-//                           .addBands(crop1988)
-//                           .addBands(crop1989)
-//                           .addBands(filtered_stack_final_1.select(['1990','1991','1992','1993','1994','1995','1996','1997','1998','1999',
-//                           '2000','2001','2002','2003','2004','2005','2006','2007','2008','2009','2010','2011',
-//                           '2012','2013','2014','2015','2016','2017','2018','2019','2020']))
-   
 
 //******************************************Recultivation Mapping***********************************************************
 //Create the 5-year rule: if a pixel is non-active crop for 5 years, then active in the next 4 years, then it is recultivation
@@ -367,19 +344,12 @@ var recult3=s_recult_masked3.reduce(ee.Reducer.max())
 /////////////////////Generate the second abandonment (modified), after removing the 1st and 3rd abandonment
 var recult2_1=s_recult.subtract(recult1.unmask()).subtract(recult3.unmask()).selfMask()
 var recult2=recult2_1.where(recult2_1.lt(1995),3)
-//abd2=abd2.where(abd2.gt(4000),3)
-
 
 //In abandonment map: stable_crop_D3: 1, no-cropland; 2, stable cropland; 3, fallow
 var reclass_aband=abandonment_map.where(abandonment_map.gt(3),4)
 
 var recult1_abandExtent=recult1.multiply(reclass_aband.eq(4))
 //In recultivation map: stable_crop_D3: 1, no-cropland; 2, stable cropland; 3, fallow; 4: uncultivated abandonment; 1995 etc. recultivation year
-//recult1=recult1.mask(reclass_aband.eq(4))
-
-//var recult1=reclass_aband.where(recult1.gt(0), recult1)//.selfMask()
-
-//var recultMap=recult1.where(recult1.lt(1990),0).selfMask()
 
 //MMU for the change class 
 var reclass_D3=reclass_aband.where(recult1_abandExtent.gt(0),5);
@@ -413,18 +383,13 @@ Export.image.toAsset({
     maxPixels: 1e13,
   });
 
-
-finalmap_D3=finalmap_D3.toDouble()
-
-finalmap_D3=finalmap_D3.clip(NUTS2)
-
+finalmap_D3=finalmap_D3.clip(NUTS2).toDouble()
 
 Export.image.toDrive({
   image: finalmap_D3,
   description: despt1,
   crs: "EPSG:32637",
- // crsTransform: projection.transform,
- folder:'GEE',
+  folder:'GEE',
   region: extent,
   scale: 30,
   maxPixels: 1e13
