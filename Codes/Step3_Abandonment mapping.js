@@ -2,12 +2,10 @@
   Date:20-April-2023
   Purpose: 1. Count the frequency of cropland and perform a temporal fiter to remove noises in annual classifications
            2. Label cropland abandonment from land cover map series, return the abandonment events
-           3. Label cropland recultivation
-           4. Apply minimum mapping unit to reduce salt and pepper effect
+           3. Apply minimum mapping unit to reduce salt and pepper effect
            Abandonment defination: a cropland pixel that is 4 years active followed by 5 year non-active
 
-  Abandonment definatetion: http://www.fao.org/ag/agn/nutrition/Indicatorsfiles/Agriculture.pdf
-  Arable land refers to land under temporary crops (doublecropped areas are counted only once), temporary meadows
+  FAO: Arable land refers to land under temporary crops (doublecropped areas are counted only once), temporary meadows
   for mowing or pasture, land under market and kitchengardens and land temporarily fallow (less than five years).
   The abandoned land resulting from shifting cultivation is not included.
 
@@ -23,7 +21,10 @@
               MMU: minimum mapping unit
 */
 
+//Get the regional boundary
 var NUTS=ee.FeatureCollection('projects/ee-hyinhe/assets/He/SILVIS/Eastern_Europe/East_Europe_boundary_NUTS2_v3
+                              
+//Set the output path and name
 var despt1='Europe_aband_1990_2019_SovietCropland'
 var despt1_1='He/Eastern_Europe/Europe_aband_1990_2019'
 
@@ -62,7 +63,6 @@ var listocollection = function(assetList,size){
   }
   return col;
 }
-
 var listocollection4 = function(assetList){
   var col=ee.ImageCollection([]);
   for (var i=0; i<2; i++){
@@ -77,7 +77,7 @@ var result=listocollection(assetList,n);
 print(result,'Land cover maps in the Assets')
 var crop4=listocollection4(assetList,n);
 
-//Get the name of the land cover map and take the last four digits as the name of the band
+//Get the name of the land cover map and take the last four digits as the name of the band. Depending the name of the files, "strlength" can be adjusted
 var bandnamechange=function(img){
     var imgname=img.get('system:id')
     var names=ee.String(imgname)
@@ -98,7 +98,7 @@ var stackCollection = function(collection) {
   return ee.Image(collection.iterate(appendBands, first));
 };
 var annualmap = stackCollection(landcover)
-var map1985=ee.Image('users/hyinhe/Europe_landcover/Class_1986_final_v1').rename('1985')
+var map1985=ee.Image('users/hyinhe/Europe_landcover/Class_1986').rename('1985')
 
 annualmap=map1985.addBands(annualmap)
 print(annualmap,'Land cover map stack')
@@ -152,7 +152,6 @@ var replace1 = current.where(before1.eq(0).and(before2.eq(0))
                            .and(after1.eq(0)).and(after2.eq(0)),0);
 var replace2 = replace1.where(before1.eq(1).and(before2.eq(1))
                            .and(after1.eq(1)).and(after2.eq(1)),1);
-
   return replace2
 }
 
@@ -269,7 +268,6 @@ var abd_year = ee.Number.parse(band);
   var abd_year_2 = ee.Number.parse(band).add(2);
   var abd_year_3 = ee.Number.parse(band).add(3);
   var abd_year_4 = ee.Number.parse(band).add(4);
- // var abd_year_5 = ee.Number.parse(band).add(5);
 
   var abd_year_b1 = ee.Number.parse(band).subtract(1);
   var abd_year_b2 = ee.Number.parse(band).subtract(2);
@@ -277,27 +275,27 @@ var abd_year = ee.Number.parse(band);
   var abd_year_b4 = ee.Number.parse(band).subtract(4);
   var abd_year_b5 = ee.Number.parse(band).subtract(5);
 
-var d0 = ee.Date.fromYMD(abd_year,1,1).format('YYYY');
-var d1 = ee.Date.fromYMD(abd_year_1,1,1).format('YYYY');
-var d2 = ee.Date.fromYMD(abd_year_2,1,1).format('YYYY');
-var d3 = ee.Date.fromYMD(abd_year_3,1,1).format('YYYY');
-var d4 = ee.Date.fromYMD(abd_year_4,1,1).format('YYYY');
+  var d0 = ee.Date.fromYMD(abd_year,1,1).format('YYYY');
+  var d1 = ee.Date.fromYMD(abd_year_1,1,1).format('YYYY');
+  var d2 = ee.Date.fromYMD(abd_year_2,1,1).format('YYYY');
+  var d3 = ee.Date.fromYMD(abd_year_3,1,1).format('YYYY');
+  var d4 = ee.Date.fromYMD(abd_year_4,1,1).format('YYYY');
 
-var dd1 = ee.Date.fromYMD(abd_year_b1,1,1).format('YYYY');
-var dd2 = ee.Date.fromYMD(abd_year_b2,1,1).format('YYYY');
-var dd3 = ee.Date.fromYMD(abd_year_b3,1,1).format('YYYY');
-var dd4 = ee.Date.fromYMD(abd_year_b4,1,1).format('YYYY');
-var dd5 = ee.Date.fromYMD(abd_year_b5,1,1).format('YYYY');
+  var dd1 = ee.Date.fromYMD(abd_year_b1,1,1).format('YYYY');
+  var dd2 = ee.Date.fromYMD(abd_year_b2,1,1).format('YYYY');
+  var dd3 = ee.Date.fromYMD(abd_year_b3,1,1).format('YYYY');
+  var dd4 = ee.Date.fromYMD(abd_year_b4,1,1).format('YYYY');
+  var dd5 = ee.Date.fromYMD(abd_year_b5,1,1).format('YYYY');
 
-var crop_frequency1=cropmap.select(dd1).eq(1)
-var crop_frequency2=cropmap.select(dd2).eq(1)
-var crop_frequency3=cropmap.select(dd3).eq(1)
-var crop_frequency4=cropmap.select(dd4).eq(1)
-var crop_frequency5=cropmap.select(dd5).eq(1)
+  var crop_frequency1=cropmap.select(dd1).eq(1)
+  var crop_frequency2=cropmap.select(dd2).eq(1)
+  var crop_frequency3=cropmap.select(dd3).eq(1)
+  var crop_frequency4=cropmap.select(dd4).eq(1)
+  var crop_frequency5=cropmap.select(dd5).eq(1)
 
-var crop_frequency=crop_frequency1.add(crop_frequency2).add(crop_frequency3).add(crop_frequency4).add(crop_frequency5)
+  var crop_frequency=crop_frequency1.add(crop_frequency2).add(crop_frequency3).add(crop_frequency4).add(crop_frequency5)
 
-//Before Abandonment, there should be at least 4 years out of 5 active use of cropland, that's why the frequency was set to greater than 2
+  //Before Abandonment, there should be at least 4 years out of 5 active use of cropland, that's why the frequency was set to greater than 2
   var abdresult=crop_frequency.gt(3)
               .and(cropmap.select(dd1).eq(1))
               .and(cropmap.select(d0).neq(1))
@@ -317,14 +315,14 @@ var abandonment=ee.ImageCollection.fromImages(
   );
 
 //*******************************************add abdnonment for 2017-2019****************************************
-var land2013=filtered_stack_final.select('2013')//.mask(cropmask);
-var land2014=filtered_stack_final.select('2014')//.mask(cropmask);
-var land2015=filtered_stack_final.select('2015')//.mask(cropmask);
-var land2016=filtered_stack_final.select('2016')//.mask(cropmask);
-var land2017=filtered_stack_final.select('2017')//.mask(cropmask);
-var land2018=filtered_stack_final.select('2018')//.mask(cropmask);
-var land2019=filtered_stack_final.select('2019')//.mask(cropmask);
-var land2020=filtered_stack_final.select('2020')//.mask(cropmask);
+var land2013=filtered_stack_final.select('2013');
+var land2014=filtered_stack_final.select('2014');
+var land2015=filtered_stack_final.select('2015');
+var land2016=filtered_stack_final.select('2016');
+var land2017=filtered_stack_final.select('2017');
+var land2018=filtered_stack_final.select('2018');
+var land2019=filtered_stack_final.select('2019');
+var land2020=filtered_stack_final.select('2020');
 
 var aband2017=land2013.eq(1).and(land2014.eq(1)).and(land2015.eq(1)).and(land2016.eq(1))
               .and(land2017.neq(1)).and(land2018.neq(1)).and(land2019.neq(1)).and(land2020.neq(1))
@@ -340,17 +338,14 @@ var aband2019=land2015.eq(1).and(land2016.eq(1)).and(land2017.eq(1)).and(land201
 
 var abandCollection=abandonment.merge(aband2017).merge(aband2018).merge(aband2019)
 
-
 var abandonment_map = stackCollection(abandCollection);
 
 //Visualize the abandonment maps
 //var abandonment_map=abandonment_stack   
 
-///////////////////////Generate the first abandonment event
+//Generate the first abandonment event
 var abamasked=abandonment_map.selfMask()
 var abd1=abamasked.reduce(ee.Reducer.min())
-//Map.addLayer(abd1,viz,'First_abandonment (before applying MMU)')
-
 
 //******************************************Create cropland mask***********************************************************
 //The result is: stable_crop_D3: 1, no-cropland; 2, stable cropland; 3, fallow
@@ -383,8 +378,7 @@ var waterMask = occurrence.gt(50).mask(1);
 var dataUrban = ee.Image('JRC/GHSL/P2016/BUILT_LDSMT_GLOBE_V1');
 var builtUp = dataUrban.select('built');
 var urbanMask=builtUp.gt(2);
-
-//https://developers.google.com/earth-engine/datasets/catalog/DLR_WSF_WSF2015_v1#bands
+//Create a settlement mask
 var DLR_WSF_WSF = ee.Image('DLR/WSF/WSF2015/v1');
 var settle=DLR_WSF_WSF.eq(255)
 
@@ -393,9 +387,9 @@ var allmap_D3=allmap_D.where(waterMask.eq(1),1).where(urbanMask.eq(1),1).where(s
 /////////////////////////////////use cropland mask//////////////////////////////////
 
 var crop_mask=ee.Image('projects/ee-hyinhe/assets/He/SILVIS/Eastern_Europe/Europe_cropland_mask_1986_1989')
-crop_mask=crop_mask//.toDouble()
+crop_mask=crop_mask
 
-var crop_1989=crop_mask//.unmask()
+var crop_1989=crop_mask
 var allmap_D4=allmap_D3.multiply(crop_1989)
 
 //MMU for the change class
@@ -420,27 +414,15 @@ var result_D3=reclass_D3.where(patchsize_D3.lt(MMU_change),dialation_D3);
 var finalmap_D3=result_D3.where(result_D3.eq(4),dialation_abd_D3);
 print(finalmap_D3);
  
-finalmap_D3=finalmap_D3.toDouble()
-Export.image.toAsset({
-    image: finalmap_D3,
-    description: despt1,
-    assetId:despt1_1,
-    scale: 30,
-   // region: geometry,
-    region: extent,
-    maxPixels: 1e13,
-  });
+finalmap_D3=finalmap_D3.clip(NUTS2).toDouble()
 
-Map.addLayer(finalmap_D3,{},'finalmap_D3')
-
-finalmap_D3=finalmap_D3.clip(NUTS2)
-
+//Export final abandonment map
 Export.image.toDrive({
   image: finalmap_D3,
   description: despt1,
   crs: "EPSG:32637",
- folder:'GEE',
+  folder:'GEE',
   region: extent,
-      scale: 30,
+  scale: 30,
   maxPixels: 1e13
 });
