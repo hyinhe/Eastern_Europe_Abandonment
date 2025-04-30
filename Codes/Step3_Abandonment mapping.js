@@ -25,8 +25,8 @@
 var NUTS=ee.FeatureCollection('projects/ee-hyinhe/assets/He/SILVIS/Eastern_Europe/East_Europe_boundary_NUTS2_v3
                               
 //Set the output path and name
-var despt1='Europe_aband_1990_2019_SovietCropland'
-var despt1_1='He/Eastern_Europe/Europe_aband_1990_2019'
+var despt1='EEurope_abandonment'
+var despt1_1='He/Eastern_Europe/EEurope_abandonment'
 
 var abdyears = ee.List(["1990","1991","1992","1993","1994","1995","1996",
                         "1997","1998","1999","2000","2001","2002","2003",
