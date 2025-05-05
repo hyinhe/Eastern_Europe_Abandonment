@@ -2,7 +2,6 @@
 /*Author:He Yin
   Date:20-April-2023
   Purpose: Mapping reforested land using land-cover maps and permanent-abandonment data.  
-  Class codes in the results: 4: permanent abandonment; 1995-2017, the timing of recultivation
   
   Parameters: 
               despt*:the name of exported maps
