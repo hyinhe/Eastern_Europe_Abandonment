@@ -6,11 +6,7 @@
   
   Parameters: 
               despt*:the name of exported maps
-              abandonment_map: abandonment map generated
-              recultyears: the year of recultivation that you want to map
-              crop: the class code for the crop
-              assetId: the directory where you store your annual land cover map, the folder should only include land cover maps
-              MMU: minimum mapping unit
+              recultivation: recultivation map generated
 */
  
 var NUTS2 = ee.FeatureCollection("projects/ee-hyinhe/assets/He/SILVIS/Eastern_Europe/East_Europe_boundary_NUTS2_v3");
