@@ -4,4 +4,4 @@ Author: Dr. He Yin
 
 Email: hyin3@kent.edu
 
-https://www.kent.edu/node/he-yin
+https://www.kent.edu/profile/he-yin
