@@ -4,4 +4,4 @@ Author: Dr. He Yin
 
 Email: hyin3@kent.edu
 
-https://www.kent.edu/profile/he-yin
+https://www.kent.edu/geography/he-yin
