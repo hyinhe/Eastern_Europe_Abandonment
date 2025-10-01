@@ -35,7 +35,7 @@ var classifier = ee.Classifier.randomForest(300).train({
   classProperty: 'Class'
 });
 
-classify imagery
+// classify imagery
 var classified = annualmetrics.classify(classifier);
 
 // Export the result to an Earth Engine asset.
